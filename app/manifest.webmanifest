@@ -1,0 +1,11 @@
+{
+  "name": "KORA Studio",
+  "short_name": "KORA",
+  "description": "Фінанси, продажі та виробництво KORA",
+  "lang": "uk",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f1e8",
+  "theme_color": "#24352c",
+  "icons": []
+}
