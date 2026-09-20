@@ -2,8 +2,6 @@
 
 KORA Studio is a mobile-first Ukrainian business workspace for a candle atelier: sales, expenses, purchases, inventory and financial analysis in one calm, practical interface.
 
-It is currently a **local-first MVP**. Without Supabase variables, records are stored only in the browser on the current device.
-
 ## Quick start
 
 ```bash
@@ -13,18 +11,29 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+**Authentication:** Login required (credentials configured in `lib/auth.ts`).
+
 Production verification:
 
 ```bash
-node node_modules/next/dist/bin/next build
+npm run build
 ```
 
-## Optional Supabase connection
+## Supabase connection
+
+Without Supabase variables, records are stored only in browser localStorage on the current device.
+
+**Setup:**
 
 1. Create a Supabase project.
-2. Execute `supabase/schema.sql` in the Supabase SQL editor.
-3. Copy `.env.example` to `.env.local`.
-4. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+2. In Supabase SQL Editor, run `supabase/schema.sql` to create tables.
+3. Run `supabase/seed-products.sql` to populate the product catalog and materials.
+4. Copy `.env.example` to `.env.local`.
+5. Add your credentials:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+   ```
 
 Never commit `.env.local`.
 

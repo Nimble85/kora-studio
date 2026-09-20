@@ -5,13 +5,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-pnpm install          # Install dependencies
-pnpm dev              # Start dev server at localhost:3000
-pnpm build            # Production build (required before handoff)
-pnpm lint             # ESLint
+npm install           # Install dependencies
+npm run dev           # Start dev server at localhost:3000
+npm run build         # Production build (required before handoff)
+npm run lint          # ESLint
 ```
 
 No test suite exists yet.
+
+## Authentication
+
+Login is required. Credentials are stored in `lib/auth.ts`:
+- Username stored as plain text constant
+- Password stored as SHA-256 hash with salt
+- Session persists 30 days in localStorage
 
 ## Architecture
 
@@ -20,11 +27,13 @@ KORA Studio is a mobile-first Ukrainian business workspace for a candle atelier.
 ### Data flow
 
 ```
-lib/types.ts          → Domain model (source of truth)
-lib/data-store.ts     → Repository boundary; maps TS camelCase ↔ Supabase snake_case
-lib/local-data.ts     → localStorage persistence (local-first mode)
-lib/demo-data.ts      → Product/material seed catalog (no mock financial records)
-supabase/schema.sql   → PostgreSQL schema when Supabase is connected
+lib/types.ts              → Domain model (source of truth)
+lib/data-store.ts         → Repository boundary; maps TS camelCase ↔ Supabase snake_case
+lib/local-data.ts         → localStorage persistence (local-first mode)
+lib/demo-data.ts          → Product/material seed catalog (no mock financial records)
+lib/auth.ts               → Authentication (login, session management)
+supabase/schema.sql       → PostgreSQL schema (run first in Supabase SQL Editor)
+supabase/seed-products.sql → Product and material seed data (run after schema)
 ```
 
 Without Supabase env vars, all data lives in browser localStorage on that device only.
@@ -72,6 +81,12 @@ Monthly cash result = monthly revenue − monthly operating expenses − monthly
 ```
 
 ## Git commits
+
+**Before every commit:**
+1. Update `docs/CHANGELOG.md` with user-visible changes
+2. Update `README.md` if setup/usage instructions changed
+3. Update this file (`CLAUDE.md`) if architecture or workflow changed
+4. Run `npm run build` to verify no errors
 
 Do not add Co-Authored-By or any attribution lines to commit messages.
 
