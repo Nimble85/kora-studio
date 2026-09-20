@@ -1,0 +1,24 @@
+supabase/seed-products.sql
+  s_8ea357109fdb06::t_9abf83996ade21 1-85
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "51ba2933e165162fd5c3fc50a7ddd4d9c38b456a",
+  "prompts": {},
+  "humans": {
+    "h_3763b525a3aa31": {
+      "author": "sklymo <s.klymoshenko@nextech.com>"
+    }
+  },
+  "sessions": {
+    "s_8ea357109fdb06": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "11b18b71-666a-42d9-af17-86256cc30794",
+        "model": "claude-opus-4-5-20251101"
+      },
+      "human_author": "sklymo <s.klymoshenko@nextech.com>"
+    }
+  }
+}
