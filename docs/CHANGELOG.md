@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4 — authentication and Supabase
+
+- Added login authentication with username/password (session persists 30 days).
+- Added logout button in the topbar.
+- Connected Supabase PostgreSQL for persistent data storage.
+- Added `.env.local` configuration for Supabase credentials.
+
 ## Unreleased
 
 - Refined Home: retained the monthly revenue hero and monthly cash-result dashboard; removed duplicated standalone expense/result cards.

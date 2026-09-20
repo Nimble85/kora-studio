@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { BarChart3, Boxes, ChevronRight, Home, Moon, Pencil, Plus, Receipt, Sparkles, Sun, Trash2, Wallet, X } from 'lucide-react';
+import { BarChart3, Boxes, ChevronRight, Home, LogOut, Moon, Pencil, Plus, Receipt, Sparkles, Sun, Trash2, Wallet, X } from 'lucide-react';
 import { configuredDataSource, demoData, loadAppData, removeExpense, removeMaterial, removePartner, removeProduct, removeSale, saveExpense, saveMaterial, savePartner, saveProduct, saveProductionBatch, savePurchase, saveRecipe, saveSale, updateExpense, updateMaterial, updatePartner, updateProduct, updateSale, type DataSource } from '@/lib/data-store';
 import { money, shortDate } from '@/lib/format';
 import { recipeUnitCost } from '@/lib/production';
+import { isAuthenticated, verifyCredentials, createSession, logout } from '@/lib/auth';
 import type { Expense, Material, Partner, PaymentMethod, Product, ProductCategory, Recipe, Sale, SalesChannel } from '@/lib/types';
 
 const today = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Kyiv' }).format(new Date());
@@ -42,6 +43,12 @@ const financialMetricHelp = {
 function sum(items: { amount: number }[]) { return items.reduce((total, item) => total + item.amount, 0); }
 
 export default function HomePage() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginError, setLoginError] = useState('');
+  const [loggingIn, setLoggingIn] = useState(false);
+
   const [dark, setDark] = useState(false);
   const [tab, setTab] = useState<'home' | 'sales' | 'expenses' | 'analysis' | 'more'>('home');
   const [showAdd, setShowAdd] = useState(false);
@@ -117,6 +124,36 @@ export default function HomePage() {
       if (saved) setMonthlyGoals(JSON.parse(saved) as Record<string, number>);
     } catch { /* The default goal remains available if local storage is unavailable. */ }
   }, []);
+
+  useEffect(() => {
+    setLoggedIn(isAuthenticated());
+    setAuthChecked(true);
+  }, []);
+
+  async function handleLogin(event: React.FormEvent) {
+    event.preventDefault();
+    setLoginError('');
+    setLoggingIn(true);
+    try {
+      const valid = await verifyCredentials(loginForm.username, loginForm.password);
+      if (valid) {
+        createSession();
+        setLoggedIn(true);
+      } else {
+        setLoginError('Невірний логін або пароль');
+      }
+    } catch {
+      setLoginError('Помилка входу');
+    } finally {
+      setLoggingIn(false);
+    }
+  }
+
+  function handleLogout() {
+    logout();
+    setLoggedIn(false);
+    setLoginForm({ username: '', password: '' });
+  }
 
   const monthSales = useMemo(() => sales.filter((sale) => sale.soldAt.startsWith(monthKey)), [sales]);
   const monthRevenue = sum(monthSales);
@@ -454,11 +491,38 @@ export default function HomePage() {
     if (next >= 0 && next < tabs.length) setTab(tabs[next]);
   }
 
+  if (!authChecked) {
+    return (
+      <main className="app-shell" data-theme={dark ? 'dark' : 'light'}>
+        <div className="login-container"><div className="login-card"><div className="brand">KORA STUDIO</div><div className="eyebrow">Завантаження...</div></div></div>
+      </main>
+    );
+  }
+
+  if (!loggedIn) {
+    return (
+      <main className="app-shell" data-theme={dark ? 'dark' : 'light'}>
+        <div className="login-container">
+          <form className="login-card" onSubmit={handleLogin}>
+            <div className="login-header"><div className="eyebrow">Digital Atelier</div><div className="brand">KORA STUDIO</div></div>
+            <div className="login-field"><label htmlFor="username">Логін</label><input id="username" type="text" value={loginForm.username} onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })} autoComplete="username" required /></div>
+            <div className="login-field"><label htmlFor="password">Пароль</label><input id="password" type="password" value={loginForm.password} onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })} autoComplete="current-password" required /></div>
+            {loginError && <div className="login-error">{loginError}</div>}
+            <button type="submit" className="login-submit" disabled={loggingIn}>{loggingIn ? 'Вхід...' : 'Увійти'}</button>
+          </form>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="app-shell" data-theme={dark ? 'dark' : 'light'}>
       <header className="topbar">
         <div><div className="eyebrow">Digital Atelier</div><div className="brand">KORA STUDIO</div></div>
-        <button className="icon-btn" onClick={() => setDark((value) => !value)} aria-label="Змінити тему">{dark ? <Sun size={18} /> : <Moon size={18} />}</button>
+        <div className="topbar-actions">
+          <button className="icon-btn" onClick={handleLogout} aria-label="Вийти" title="Вийти"><LogOut size={18} /></button>
+          <button className="icon-btn" onClick={() => setDark((value) => !value)} aria-label="Змінити тему">{dark ? <Sun size={18} /> : <Moon size={18} />}</button>
+        </div>
       </header>
 
       <section className="content" onTouchStart={(event) => setTouchStartX(event.touches[0]?.clientX ?? null)} onTouchEnd={(event) => handleTabSwipeEnd(event.changedTouches[0]?.clientX ?? 0)}>
