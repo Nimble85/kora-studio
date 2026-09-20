@@ -1,0 +1,31 @@
+CLAUDE.md
+  s_8ea357109fdb06::t_795be55e79a4ac 30-36
+  s_8ea357109fdb06::t_4841fd2f83fa35 8-11,16-21
+  s_8ea357109fdb06::t_2a6131d4f2364f 85-90
+  s_8ea357109fdb06::t_e702a7dce5d96d 22
+README.md
+  s_8ea357109fdb06::t_e67ff0b6c5b367 14-15,19,22-26,29-36
+catalog.md
+  h_3763b525a3aa31 1-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d355d69fed8d5d3cb2b42d08866da662c61ec964",
+  "prompts": {},
+  "humans": {
+    "h_3763b525a3aa31": {
+      "author": "sklymo <s.klymoshenko@nextech.com>"
+    }
+  },
+  "sessions": {
+    "s_8ea357109fdb06": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "11b18b71-666a-42d9-af17-86256cc30794",
+        "model": "claude-opus-4-5-20251101"
+      },
+      "human_author": "sklymo <s.klymoshenko@nextech.com>"
+    }
+  }
+}
