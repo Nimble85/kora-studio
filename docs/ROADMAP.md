@@ -3,11 +3,11 @@
 ## Release 0.4 — reliability first
 
 - [ ] Add unit/integration tests for financial calculations and stock changes.
-- [ ] Add a real ESLint configuration and make `npm run lint` part of release verification.
+- [x] Add an ESLint configuration and make `npm run lint` part of release verification (remaining warnings are tracked in `NEXT_ITERATIONS.md`).
 - [ ] Add explicit confirmation before destructive record deletion.
 - [ ] Add export/backup of local data and restore flow.
 - [ ] Add validation and accessible error messages for all financial forms.
-- [ ] Version Supabase migrations instead of relying only on one schema file.
+- [x] Add a versioned Supabase migration for the workshop release (migration tracking and a non-duplicated seed remain in `NEXT_ITERATIONS.md`).
 
 ## Release 0.5 — exact production economics
 

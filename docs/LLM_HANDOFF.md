@@ -13,6 +13,8 @@ Give the agent:
 
 The agent must read `AGENTS.md`, `README.md`, `docs/PRODUCT.md` and the relevant source files before editing.
 
+For deployment or persistence work, also read `docs/DEPLOY_FROM_SCRATCH.md`, `docs/SUPABASE_MIGRATION.md` and `docs/NEXT_ITERATIONS.md`. Treat code deployment and database migration as separate operations; check the live project and its migration records before claiming a rollout is complete.
+
 ## Ready-to-copy task prompt
 
 ```text

@@ -1,9 +1,9 @@
--- Run once on an existing Supabase database. Safe to repeat.
+-- Run the whole file on the existing Supabase project used by the deployed app. Safe to repeat.
+-- ALTER TABLE alone fixes missing-column errors but does not add the 20 catalog products.
 alter table public.sales add column if not exists workshop_at date;
 alter table public.sales add column if not exists deposit numeric(12,2);
 alter table public.sales add column if not exists candle_choices jsonb;
 alter table public.sales add column if not exists instagram_url text;
-
 
 -- Additional coconut candles and editable workshop products
 INSERT INTO public.products (id, name, category, price, active, wax_min_grams, wax_max_grams) VALUES

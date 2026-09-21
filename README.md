@@ -23,11 +23,13 @@ npm run build
 
 Without Supabase variables, records are stored only in browser localStorage on the current device.
 
+For a full installation, including verification and recovery steps, follow [Deployment from scratch](docs/DEPLOY_FROM_SCRATCH.md). The short setup below assumes a **new empty** Supabase project. For an existing project with data, follow [Supabase migration and troubleshooting](docs/SUPABASE_MIGRATION.md).
+
 **Setup:**
 
 1. Create a Supabase project.
 2. In Supabase SQL Editor, run `supabase/schema.sql` to create tables.
-3. Run `supabase/seed-products.sql` to populate the product catalog and materials. For an **existing** database, run `supabase/migrations/20260921_workshops.sql` before deploying this version; it adds the workshop sale fields and catalog entries without replacing existing records.
+3. Run `supabase/seed-products.sql` to populate the product catalog and materials. For an **existing** database, run the full `supabase/migrations/20260921_workshops.sql` file before deploying this version. Adding only the four sale columns fixes error `42703` but leaves the 20 new catalog items absent. See [Supabase migration guide](docs/SUPABASE_MIGRATION.md).
 4. Copy `.env.example` to `.env.local`.
 5. Add your credentials:
    ```
@@ -45,6 +47,9 @@ Never commit `.env.local`.
 - [Release checklist](docs/RELEASE_CHECKLIST.md)
 - [Changelog](docs/CHANGELOG.md)
 - [Release notes](docs/RELEASE_NOTES.md)
+- [Deployment from scratch](docs/DEPLOY_FROM_SCRATCH.md)
+- [Supabase migration and troubleshooting](docs/SUPABASE_MIGRATION.md)
+- [Notes for future iterations](docs/NEXT_ITERATIONS.md)
 - [Instructions for coding agents](AGENTS.md)
 - [LLM handoff guide](docs/LLM_HANDOFF.md)
 

@@ -2,13 +2,16 @@
 
 Use this before publishing a build or giving it to a real KORA user.
 
+Start a new installation with [`DEPLOY_FROM_SCRATCH.md`](DEPLOY_FROM_SCRATCH.md); for an existing database, use [`SUPABASE_MIGRATION.md`](SUPABASE_MIGRATION.md). A code deploy does not run SQL.
+
 ## Safety
 
 - [ ] `.env.local` is not committed or shared.
 - [ ] `.env.example` contains only empty placeholder values.
 - [ ] No real customer, supplier or financial data exists in demo fixtures.
-- [ ] If Supabase is enabled, run `supabase/migrations/20260921_workshops.sql` on the intended existing project before deploying this code; verify new products and sale fields. For a fresh project, run `supabase/schema.sql` and `supabase/seed-products.sql`.
+- [ ] If Supabase is enabled, run `supabase/migrations/20260921_workshops.sql` on the intended existing project before deploying this code; verify all four sale fields and 20 catalog records using `docs/SUPABASE_MIGRATION.md`. For a fresh project, run `supabase/schema.sql` and `supabase/seed-products.sql`.
 - [ ] Supabase RLS and authentication strategy were reviewed before opening the app to more than one person.
+- [ ] The deployed commit SHA and Supabase Project URL correspond to the intended environment; no service role key is exposed to the browser.
 
 ## Functional smoke test
 
@@ -35,6 +38,7 @@ node node_modules/next/dist/bin/next build
 ```
 
 - [ ] Production build succeeds; lint has no errors (review any warnings).
+- [ ] A new database contains 60 products, 19 materials, zero sales and the four workshop sale columns; an existing database passes the migration ID check.
 - [ ] Test at a narrow mobile viewport and a desktop viewport.
 - [ ] Refresh after data entry in local mode; records persist.
 - [ ] Test in Supabase mode if it is part of this release.

@@ -54,3 +54,7 @@ When adding or changing persisted data:
 ## Workshops
 
 A workshop is a catalog product. Its sale stores the workshop date and selected candles. The calendar groups sales by workshop date and product name, so bookings of the same workshop on the same date appear together. Deposit and balance are shown separately; the existing revenue reports continue to use the agreed sale total.
+
+## Migration of an existing Supabase project
+
+The workshop release requires the additive SQL in `supabase/migrations/20260921_workshops.sql`. Its four `ALTER TABLE` statements enable sale fields; the `INSERT` adds 20 catalog products. Deploying code does not run this migration. For symptoms and verification queries, see `docs/SUPABASE_MIGRATION.md`.
