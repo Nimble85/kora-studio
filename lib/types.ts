@@ -32,6 +32,10 @@ export type Sale = {
   channel: SalesChannel;
   payment: PaymentMethod;
   note?: string;
+  workshopAt?: string;
+  deposit?: number;
+  candleChoices?: { name: string; quantity: number }[];
+  instagramUrl?: string;
 };
 
 export type Expense = {

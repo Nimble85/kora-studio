@@ -39,9 +39,10 @@ export function readLocalData(): LocalData {
     if (!Array.isArray(parsed.products) || !Array.isArray(parsed.sales) || !Array.isArray(parsed.expenses)) {
       return initialData;
     }
+    const missingProducts = initialData.products.filter((product) => !parsed.products!.some((stored) => stored.id === product.id));
     const storedMaterials = Array.isArray(parsed.materials) ? parsed.materials : [];
     const missingMaterials = initialData.materials.filter((material) => !storedMaterials.some((stored) => stored.id === material.id));
-    return { ...initialData, ...parsed, materials: [...storedMaterials, ...missingMaterials], partners: Array.isArray(parsed.partners) ? parsed.partners : initialData.partners, purchases: Array.isArray(parsed.purchases) ? parsed.purchases : initialData.purchases, recipes: Array.isArray(parsed.recipes) ? parsed.recipes : initialData.recipes, batches: Array.isArray(parsed.batches) ? parsed.batches : initialData.batches };
+    return { ...initialData, ...parsed, products: [...parsed.products, ...missingProducts], materials: [...storedMaterials, ...missingMaterials], partners: Array.isArray(parsed.partners) ? parsed.partners : initialData.partners, purchases: Array.isArray(parsed.purchases) ? parsed.purchases : initialData.purchases, recipes: Array.isArray(parsed.recipes) ? parsed.recipes : initialData.recipes, batches: Array.isArray(parsed.batches) ? parsed.batches : initialData.batches };
   } catch {
     return initialData;
   }

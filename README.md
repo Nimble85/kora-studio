@@ -11,7 +11,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-**Authentication:** Login required (credentials configured in `lib/auth.ts`).
+**Authentication:** Login required. This MVP does not provide tenant-specific Supabase access controls.
 
 Production verification:
 
@@ -27,7 +27,7 @@ Without Supabase variables, records are stored only in browser localStorage on t
 
 1. Create a Supabase project.
 2. In Supabase SQL Editor, run `supabase/schema.sql` to create tables.
-3. Run `supabase/seed-products.sql` to populate the product catalog and materials.
+3. Run `supabase/seed-products.sql` to populate the product catalog and materials. For an **existing** database, run `supabase/migrations/20260921_workshops.sql` before deploying this version; it adds the workshop sale fields and catalog entries without replacing existing records.
 4. Copy `.env.example` to `.env.local`.
 5. Add your credentials:
    ```
@@ -44,6 +44,7 @@ Never commit `.env.local`.
 - [Roadmap](docs/ROADMAP.md)
 - [Release checklist](docs/RELEASE_CHECKLIST.md)
 - [Changelog](docs/CHANGELOG.md)
+- [Release notes](docs/RELEASE_NOTES.md)
 - [Instructions for coding agents](AGENTS.md)
 - [LLM handoff guide](docs/LLM_HANDOFF.md)
 

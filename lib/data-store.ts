@@ -35,6 +35,10 @@ type SaleRow = {
   channel: SalesChannel;
   payment_method: PaymentMethod;
   note: string | null;
+  workshop_at: string | null;
+  deposit: number | string | null;
+  candle_choices: Sale['candleChoices'] | null;
+  instagram_url: string | null;
 };
 
 type ExpenseRow = {
@@ -63,6 +67,10 @@ const saleFromRow = (row: SaleRow): Sale => ({
   channel: row.channel,
   payment: row.payment_method,
   note: row.note ?? undefined,
+  workshopAt: row.workshop_at ?? undefined,
+  deposit: row.deposit == null ? undefined : Number(row.deposit),
+  candleChoices: row.candle_choices ?? undefined,
+  instagramUrl: row.instagram_url ?? undefined,
 });
 const expenseFromRow = (row: ExpenseRow): Expense => ({
   id: row.id,
@@ -85,7 +93,7 @@ export async function loadAppData(): Promise<AppData> {
 
   const [products, sales, expenses, materials, partners, purchases, recipes, recipeItems, batches] = await Promise.all([
     client.from('products').select('id, name, category, price, active, wax_min_grams, wax_max_grams').order('created_at', { ascending: false }),
-    client.from('sales').select('id, sold_at, product_id, product_name, amount, quantity, channel, payment_method, note').order('sold_at', { ascending: false }),
+    client.from('sales').select('id, sold_at, product_id, product_name, amount, quantity, channel, payment_method, note, workshop_at, deposit, candle_choices, instagram_url').order('sold_at', { ascending: false }),
     client.from('expenses').select('id, spent_at, category, amount, note').order('spent_at', { ascending: false }),
     client.from('materials').select('id, name, unit, stock, min_stock, average_cost').order('name'),
     client.from('partners').select('id, name, website, instagram, phone, note').order('name'),
@@ -167,7 +175,8 @@ export async function saveSale(sale: Omit<Sale, 'id'>): Promise<Sale> {
     channel: sale.channel,
     payment_method: sale.payment,
     note: sale.note || null,
-  }).select('id, sold_at, product_id, product_name, amount, quantity, channel, payment_method, note').single();
+    workshop_at: sale.workshopAt || null, deposit: sale.deposit ?? null, candle_choices: sale.candleChoices ?? null, instagram_url: sale.instagramUrl || null,
+  }).select('id, sold_at, product_id, product_name, amount, quantity, channel, payment_method, note, workshop_at, deposit, candle_choices, instagram_url').single();
   if (error) throw error;
   return saleFromRow(data as SaleRow);
 }
@@ -179,7 +188,7 @@ export async function updateSale(sale: Sale): Promise<Sale> {
     writeLocalData({ ...current, sales: current.sales.map((item) => item.id === sale.id ? sale : item) });
     return sale;
   }
-  const { data, error } = await client.from('sales').update({ sold_at: sale.soldAt, product_id: sale.productId, product_name: sale.productName, amount: sale.amount, quantity: sale.quantity, channel: sale.channel, payment_method: sale.payment, note: sale.note || null }).eq('id', sale.id).select('id, sold_at, product_id, product_name, amount, quantity, channel, payment_method, note').single();
+  const { data, error } = await client.from('sales').update({ sold_at: sale.soldAt, product_id: sale.productId, product_name: sale.productName, amount: sale.amount, quantity: sale.quantity, channel: sale.channel, payment_method: sale.payment, note: sale.note || null, workshop_at: sale.workshopAt || null, deposit: sale.deposit ?? null, candle_choices: sale.candleChoices ?? null, instagram_url: sale.instagramUrl || null }).eq('id', sale.id).select('id, sold_at, product_id, product_name, amount, quantity, channel, payment_method, note, workshop_at, deposit, candle_choices, instagram_url').single();
   if (error) throw error;
   return saleFromRow(data as SaleRow);
 }

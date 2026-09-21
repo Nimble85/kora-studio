@@ -1,18 +1,34 @@
 # Changelog
 
+## Unreleased — майстер-класи та підготовка до релізу (2026-09-21)
+
+### Каталог і продажі
+
+- Додано три розміри звичайного кокоса з діапазонами воску та цінами 550, 750 і 950 грн.
+- Додано індивідуальний МК, МК для двох і трьох, групові МК та МК для своєї компанії з цінами за типом свічки. Позиції каталогу можна редагувати й архівувати.
+- Продаж МК зберігає дату проведення, повну ціну, передплату, вибрані свічки з кількістю, посилання на Instagram, канал, спосіб оплати й коментар. Залишок до сплати обчислюється автоматично та позначається червоним або зеленим кольором.
+- Історію «Усі продажі» можна згортати за роками й місяцями.
+- У швидкому записі залишено чотири дії: продаж, закупка, витрата, новий продукт.
+
+### Календар і головна
+
+- У «Ще» додано згортаний календар МК з вибором місяця й дня. Бронювання однакового МК на ту саму дату відображаються разом; їх можна редагувати.
+- На «Головній» з’являється нагадування про МК за три дні до проведення і до самого дня. Натискання відкриває потрібну дату календаря.
+- Додано блок «Поповнити склад» для матеріалів із заданим мінімальним залишком; сезонний блок скорочено до нагадування про найближче свято.
+
+### Зберігання даних
+
+- Додано поля продажу МК у локальному сховищі та Supabase. Для наявної бази підготовлено адитивну міграцію `supabase/migrations/20260921_workshops.sql`; новий каталог також додано до seed.
+- Повна ціна МК входить у виручку за чинним правилом продажів; передплата та залишок показуються окремо. Це ще не касовий облік часткових платежів.
+- Додано конфіг ESLint 9 для перевірки коду перед релізом.
+
 ## 0.4 — authentication and Supabase
 
 - Added login authentication with username/password (session persists 30 days).
 - Added logout button in the topbar.
 - Connected Supabase PostgreSQL for persistent data storage.
 - Added `.env.local` configuration for Supabase credentials.
-
-## Unreleased
-
-- Refined Home: retained the monthly revenue hero and monthly cash-result dashboard; removed duplicated standalone expense/result cards.
-- Added financial P&L in Analysis with selectable periods, previous-period comparison, monthly chart, channels and tap-to-open metric formulas.
-- Added swipe navigation between all five bottom sections.
-- Documented release, domain, data-model and LLM development contracts.
+- Refined Home, added P&L in Analysis, swipe navigation and documented financial definitions.
 
 ## 0.3 — foundation
 

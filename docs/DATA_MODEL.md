@@ -14,7 +14,7 @@ The same domain model works in two modes:
 | Entity | Important fields | Notes |
 | --- | --- | --- |
 | Product | category, price, active, wax min/max | Archive via `active: false`; keep sale history. |
-| Sale | date, product, product name snapshot, amount, quantity, channel, payment | `amount` is the line total, not unit price. |
+| Sale | date, product, product name snapshot, amount, quantity, channel, payment; optional workshop date, deposit, candle choices and Instagram URL | `amount` is the full agreed sale total. `deposit` is the paid amount for a workshop; remaining balance is calculated as `amount − deposit`. |
 | Expense | date, category, amount, note | Categories `Податки` and `Комісії` are separated in P&L. |
 | Material | unit, stock, min stock, average cost | `averageCost` is the current weighted average per unit. |
 | Purchase | material, supplier name, quantity, unit, unit price, total | Increases stock and recalculates `averageCost`. |
@@ -50,3 +50,7 @@ When adding or changing persisted data:
 5. Update form validation and UI.
 6. Update this document and `docs/CHANGELOG.md`.
 7. Test both no-Supabase and Supabase modes.
+
+## Workshops
+
+A workshop is a catalog product. Its sale stores the workshop date and selected candles. The calendar groups sales by workshop date and product name, so bookings of the same workshop on the same date appear together. Deposit and balance are shown separately; the existing revenue reports continue to use the agreed sale total.

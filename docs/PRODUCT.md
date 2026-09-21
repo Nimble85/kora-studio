@@ -13,13 +13,13 @@ KORA Studio gives a candle atelier a single place to record sales, purchases, ex
 
 | Section | Purpose |
 | --- | --- |
-| `Головна` | Monthly revenue goal, monthly cash result, quick actions, today’s sales and seasonal reminder. |
-| `Продажі` | New sale, monthly revenue, average check, product performance, monthly movement and editable sales history. |
+| `Головна` | Monthly revenue goal and cash result, today’s sales, workshop reminders three days ahead, low-stock materials and the next holiday. |
+| `Продажі` | New sale, workshop booking details, monthly revenue, average check, product performance and history grouped by year and month. |
 | `Витрати` | Operating expenses and inventory purchases, their total, spending mix and editable history. |
 | `Аналіз` | Period P&L, comparison with the previous matching period, monthly trend and sales channels. |
-| `Ще` | Product catalog, inventory, suppliers/partners and the production entry point. |
+| `Ще` | Collapsible workshop calendar, editable product catalog, inventory, suppliers/partners and the production entry point. |
 
-The bottom navigation has five equal items. A raised central `＋` opens quick creation. Horizontal swipe changes the active section and must keep the bottom navigation state in sync.
+The bottom navigation has five equal items. A raised central `＋` opens four quick actions: sale, purchase, expense and new product. Horizontal swipe changes the active section and must keep the bottom navigation state in sync.
 
 ## Financial vocabulary
 
@@ -50,15 +50,19 @@ Implemented:
 - local-first storage with optional Supabase persistence;
 - financial analysis by day, week, month, year or custom dates;
 - recipes and production batches as an initial production foundation;
-- seasonal reminder and editable monthly revenue goal.
+- seasonal and workshop reminders, low-stock materials and editable monthly revenue goal.
 
 Deliberately deferred:
 
-- user authentication, roles and secure multi-tenant database policies;
+- secure multi-user authentication, roles and tenant-specific database policies;
 - receipt file storage, CRM, client history and payment reconciliation;
 - historical batch-to-sale COGS allocation;
-- dedicated event and workshop models;
+- a separate event model beyond workshop bookings attached to sales;
 - offline sync queue and conflict resolution;
 - automated integrations with shops, payments or social networks.
 
 See `docs/ROADMAP.md` before choosing the next feature.
+
+## Workshop booking and inventory reminders
+
+Workshop products have editable prices. A workshop sale records its date, deposit, selected candle types and quantities, Instagram link, payment, channel, and comment. The collapsible calendar under `Ще` groups bookings for the same workshop and date. Home reminds about bookings from three days before the workshop through its date; tapping a reminder selects that day in the calendar. Home lists materials whose configured minimum stock is above zero and whose current stock is at or below that minimum.
